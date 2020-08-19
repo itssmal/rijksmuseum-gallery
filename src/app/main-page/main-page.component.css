@@ -1,0 +1,63 @@
+a {
+  color: chocolate;
+  cursor: pointer;
+}
+.btn-outline-custom {
+  color: chocolate;
+  background-color: black;
+  border: 1px solid chocolate;
+  border-radius: 5px;
+  outline: none;
+}
+.btn-outline-custom:hover, .btn-outline-custom:focus{
+  color: black;
+  background-color: chocolate;
+  outline: none;
+  outline-offset: 0 !important;
+  box-shadow: 0 0 0 0.1rem #fa7817 !important;
+}
+hr {
+  color: chocolate;
+  background-color: chocolate;
+}
+.card {
+  position: relative;
+  width: 50%;
+  max-width: 300px;
+}
+.card-img-overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.8); /* Black see-through */
+  color: chocolate;
+  width: 100%;
+  transition: .5s ease;
+  opacity: 0;
+  font-size: 20px;
+  padding: 20px;
+  margin-top: 3em;
+  text-align: center;
+  object-fit: cover;
+}
+.card:hover .card-img-overlay {
+  opacity: 1;
+}
+.text-custom {
+  color: chocolate;
+  background-color: transparent;
+  transition: 300ms;
+  border: 0 solid black;
+}
+.loader {
+  color: chocolate;
+}
+.page-link.text-custom:hover {
+  border: 1px solid chocolate !important;
+  border-radius: 3px !important;
+  transition: 600ms;
+}
+.blurred {
+  -webkit-backdrop-filter: blur(100px) !important;
+  backdrop-filter: blur(100px) !important;
+}
