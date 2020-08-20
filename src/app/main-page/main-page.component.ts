@@ -90,7 +90,7 @@ export class MainPageComponent implements OnInit {
   search() {
     this.items = []
     if (this.query !== '') {
-      this.http.fetch(this.page, this.resPerPage, this.query, this.sortType).subscribe(
+      this.http.fetch(this.page, this.resPerPage, this.objType, this.objMat, this.query, this.sortType).subscribe(
         (items) => {
           this.items = items.artObjects
         }
@@ -111,7 +111,22 @@ export class MainPageComponent implements OnInit {
     this.http.getColDetails(objNum).subscribe(
       (item) => {
         this.detailedItem = item.artObject
-        console.log(item.artObject)
+
+        for (let i = 0; i < this.favItems.length; i++) {
+          if (objNum === this.favItems[i].objectNumber) {
+            this.detailedItem.favourite = true
+          }
+        }
+      }
+    )
+    this.modal.open(content,{backdropClass: 'blurred', size: 'xl', centered: true, keyboard: false, backdrop: 'static'})
+  }
+
+  openModalFav(content, objNum) {
+    this.http.getColDetails(objNum).subscribe(
+      (item) => {
+        this.detailedItem = item.artObject
+        this.detailedItem.favourite = true
       }
     )
     this.modal.open(content,{backdropClass: 'blurred', size: 'xl', centered: true, keyboard: false, backdrop: 'static'})
@@ -122,7 +137,7 @@ export class MainPageComponent implements OnInit {
     this.router.navigate([`item/${objNum}`])
   }
 
-  toggleFav() {
+  toggleFavMode() {
     this.favMode = !this.favMode
     let result = this.favService.getItems()
     if (result.length !== 0) {
@@ -135,9 +150,15 @@ export class MainPageComponent implements OnInit {
 
   toggleToFav(item: DetailedItem) {
     if (item.favourite === true) {
-      this.favItems = this.favService.removeItem(item)
+      this.favService.removeItem(item)
     } else {
-      this.favItems = this.favService.addItem(item)
+      this.favService.addItem(item)
+      window.alert('Added to Favourites!')
     }
+    this.modal.dismissAll()
+    this.favItems = this.favService.getItems()
+    // if (this.favItems.length === 0) {
+    //   this.noFavMes = 'No favourites yet!'
+    // }
   }
 }

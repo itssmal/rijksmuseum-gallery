@@ -6,7 +6,7 @@
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item cta cta-colored">
-            <a (click)="toggleFav()" class="nav-link">
+            <a (click)="toggleFavMode()" class="nav-link">
               <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
               </svg>
@@ -56,23 +56,23 @@
 </div>
 
 <div class="container my-3" *ngIf="favMode">
-  <h2 class="text-center text-custom">Not implemented yet</h2>
-<!--  <div class="row" *ngIf="!noFavMes; else favMessage">-->
-<!--    <div *ngIf="favItems.length !== 0; else loader">-->
-<!--      <div class="col-md-2 mb-5" style="height: 12rem" *ngFor="let item of favItems; let i = index">-->
-<!--        <a (click)="openModal(content, item.objectNumber)">-->
-<!--          <div class="card border-0 m-center" style="width: 100%">-->
-<!--            <a class="text-decoration-none text-body">-->
-<!--              <img class="card-img" [src]="item.webImage.url" alt="" style=" height: 12rem">-->
-<!--              <span class="card-img-overlay" style="font-size: 0.9rem">-->
-<!--                {{item.title}}-->
-<!--              </span>-->
-<!--            </a>-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
+<!--  <h2 class="text-center text-custom">Not implemented yet</h2>-->
+  <div class="row" *ngIf="!noFavMes; else favMessage">
+    <div *ngIf="favItems.length !== 0; else loader">
+      <div class="col-md-2 mb-5" style="height: 12rem" *ngFor="let item of favItems; let i = index">
+        <a (click)="openModalFav(contentFav, item.objectNumber)">
+          <div class="card border-0 m-center" style="width: 100%">
+            <a class="text-decoration-none text-body">
+              <img class="card-img" [src]="item.webImage.url" alt="" style=" height: 12rem">
+              <span class="card-img-overlay" style="font-size: 0.9rem">
+                {{item.title}}
+              </span>
+            </a>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <ng-template #favMessage>
@@ -129,6 +129,38 @@
 </div>
 
 <ng-template #content let-modal class="bg-body text-custom blurred">
+  <div class="modal-header">
+    <h4 class="modal-title text-custom">{{detailedItem.title}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-custom">
+    <div class="row">
+      <div class="col-6">
+        <img [src]="detailedItem.webImage.url" alt="img" style="max-height: 20rem; max-width: 100%">
+      </div>
+      <div class="col-6">
+        <span>{{detailedItem.description}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="text-custom flex-row">
+    <button type="button"
+            class="btn bg-body btn-outline-custom float-left m-3"
+            (click)="toggleToFav(detailedItem)"
+    >
+      <a>{{detailedItem.favourite ? 'Remove from favourites' : 'Add to favourites'}}</a>
+    </button>
+    <button type="button" class="btn bg-body btn-outline-custom float-left m-3" (click)="openDetails(detailedItem.objectNumber)">
+      <a>View more details</a>
+    </button>
+    <button type="button" class="btn bg-body btn-outline-custom float-right m-3" (click)="modal.close('Close click')">Close</button>
+
+  </div>
+</ng-template>
+
+<ng-template #contentFav let-modal class="bg-body text-custom blurred">
   <div class="modal-header">
     <h4 class="modal-title text-custom">{{detailedItem.title}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">

@@ -25,7 +25,12 @@ export class FavouritesService {
 
   removeItem(item) {
     item.favourite = false
-    return this.favItems.filter(b => item === b)
+    function delItem(arr, item) {
+      return arr.filter((el) => {
+        return el.objectNumber !== item.objectNumber
+      })
+    }
+    this.favItems = delItem(this.favItems, item)
   }
 
 }
